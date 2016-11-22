@@ -1,0 +1,74 @@
+package cauealmeida.com.braziliansoccerclubs.adapters;
+
+import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
+import java.util.List;
+
+import cauealmeida.com.braziliansoccerclubs.R;
+import cauealmeida.com.braziliansoccerclubs.models.Team;
+
+/**
+ * Created by cauealmeida on 11/22/16.
+ */
+
+public class TeamListAdapter extends RecyclerView.Adapter<TeamListAdapter.TeamsViewHolder> {
+
+    private List<Team> teamsList;
+    private Context context;
+
+    // Inflates/creates our view - it's linking to what we've created before: XML file
+    @Override
+    public TeamsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater
+                    .from(context)
+                .inflate(R.layout.item_team, parent, false);
+        return new TeamsViewHolder(v);
+    }
+
+    @Override
+    public void onBindViewHolder(TeamsViewHolder holder, int position) {
+        Team team = teamsList.get(position);
+        holder.tName.setText(team.getName());
+        holder.description.setText(team.getState());
+
+        Picasso
+                .with(context)
+                .load(team.getLogo())
+                .placeholder(R.mipmap.ic_launcher)
+                .error(R.mipmap.ic_launcher)
+                .into(holder.image);
+
+        holder.progressBar.setVisibility(View.VISIBLE);
+        // TODO clicklistener
+    }
+
+    @Override
+    public int getItemCount() {
+        return teamsList.size();
+    }
+
+    public static class TeamsViewHolder extends RecyclerView.ViewHolder {
+        public TextView tName;
+        ImageView image;
+        ProgressBar progressBar;
+        TextView description;
+
+        public TeamsViewHolder(View v) {
+            super(v);
+            tName = (TextView) v.findViewById(R.id.tvName);
+            image = (ImageView) v.findViewById(R.id.ivImage);
+            progressBar = (ProgressBar) v.findViewById(R.id.progressImg);
+            description = (TextView) v.findViewById(R.id.tvDesc);
+        }
+    }
+
+}
