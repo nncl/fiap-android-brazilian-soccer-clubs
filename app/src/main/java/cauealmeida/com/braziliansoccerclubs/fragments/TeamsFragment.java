@@ -13,11 +13,9 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import cauealmeida.com.braziliansoccerclubs.DetailActivity;
 import cauealmeida.com.braziliansoccerclubs.R;
 import cauealmeida.com.braziliansoccerclubs.adapters.TeamListAdapter;
 import cauealmeida.com.braziliansoccerclubs.api.TeamAPI;
-import cauealmeida.com.braziliansoccerclubs.listener.OnClickListener;
 import cauealmeida.com.braziliansoccerclubs.models.Team;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,7 +28,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class TeamsFragment extends Fragment implements Callback<List<Team>> {
     protected RecyclerView recyclerView;
-    private String type; // TODO remove it cause we don't need it
     private TeamListAdapter teamListAdapter;
 
     public TeamsFragment() {
@@ -40,11 +37,6 @@ public class TeamsFragment extends Fragment implements Callback<List<Team>> {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // TODO: remove it as well
-        if (getArguments() != null) {
-            this.type = getArguments().getString("team");
-        }
     }
 
     @Override
@@ -71,7 +63,7 @@ public class TeamsFragment extends Fragment implements Callback<List<Team>> {
 
         // prepara a chamada no Retrofit 2.0
         TeamAPI teamAPI = retrofit.create(TeamAPI.class);
-        Call<List<Team>> call = teamAPI.findBy(type);
+        Call<List<Team>> call = teamAPI.findBy("classicos");
 
         // async call
         call.enqueue(this);
@@ -82,23 +74,9 @@ public class TeamsFragment extends Fragment implements Callback<List<Team>> {
     * nosso adapter.
     */
 
-    private OnClickListener onClickListener() {
-        return new OnClickListener() {
-            @Override
-            public void onClick(View v, int pos) {
-                // Pass data from here to next single screen
-                Intent intent = new Intent(getContext(), DetailActivity.class);
-
-                // Transform our object into Parcelable (Car class)
-                intent.putExtra("team", teamListAdapter.getItem(pos));
-                startActivity(intent);
-            }
-        };
-    }
-
     @Override
     public void onResponse(Call<List<Team>> call, Response<List<Team>> response) {
-        teamListAdapter = new TeamListAdapter(getContext(), response.body(), onClickListener());
+        teamListAdapter = new TeamListAdapter(getContext(), response.body());
         recyclerView.setAdapter(teamListAdapter);
     }
 

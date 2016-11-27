@@ -14,7 +14,6 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import cauealmeida.com.braziliansoccerclubs.R;
-import cauealmeida.com.braziliansoccerclubs.listener.OnClickListener;
 import cauealmeida.com.braziliansoccerclubs.models.Team;
 
 /**
@@ -25,12 +24,10 @@ public class TeamListAdapter extends RecyclerView.Adapter<TeamListAdapter.TeamsV
 
     private List<Team> teamsList;
     private Context context;
-    private OnClickListener clickListener;
 
-    public TeamListAdapter(Context c, List<Team> teams, OnClickListener clickListener) {
+    public TeamListAdapter(Context c, List<Team> teams) {
         this.context = c;
         this.teamsList = teams; // that's our f data, and now we bind this information
-        this.clickListener = clickListener; // What that screen has to do with that info
     }
 
     // Inflates/creates our view - it's linking to what we've created before: XML file
@@ -57,16 +54,6 @@ public class TeamListAdapter extends RecyclerView.Adapter<TeamListAdapter.TeamsV
                 .into(holder.image);
 
         holder.progressBar.setVisibility(View.VISIBLE);
-
-        // TODO remove it
-        if (clickListener != null) {
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    clickListener.onClick(holder.itemView, position);
-                }
-            });
-        }
     }
 
     public Team getItem(int pos) {
