@@ -1,5 +1,6 @@
 package cauealmeida.com.braziliansoccerclubs.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,19 +13,24 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import cauealmeida.com.braziliansoccerclubs.DetailActivity;
 import cauealmeida.com.braziliansoccerclubs.R;
 import cauealmeida.com.braziliansoccerclubs.adapters.TeamListAdapter;
+import cauealmeida.com.braziliansoccerclubs.api.TeamAPI;
+import cauealmeida.com.braziliansoccerclubs.listener.OnClickListener;
 import cauealmeida.com.braziliansoccerclubs.models.Team;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class TeamsFragment extends Fragment implements Callback<List<Team>> {
     protected RecyclerView recyclerView;
-    private String type; // TODO remove it cause we dont need it
+    private String type; // TODO remove it cause we don't need it
     private TeamListAdapter teamListAdapter;
 
     public TeamsFragment() {
@@ -37,7 +43,7 @@ public class TeamsFragment extends Fragment implements Callback<List<Team>> {
 
         // TODO: remove it as well
         if (getArguments() != null) {
-            this.type = getArguments().getString("type");
+            this.type = getArguments().getString("team");
         }
     }
 
@@ -52,8 +58,48 @@ public class TeamsFragment extends Fragment implements Callback<List<Team>> {
     }
 
     @Override
-    public void onResponse(Call<List<Team>> call, Response<List<Team>> response) {
+    public void onActivityCreated(Bundle bundle) {
+        super.onActivityCreated(bundle);
+        loadContent();
+    }
 
+    private void loadContent() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://www.heiderlopes.com.br")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        // prepara a chamada no Retrofit 2.0
+        TeamAPI teamAPI = retrofit.create(TeamAPI.class);
+        Call<List<Team>> call = teamAPI.findBy(type);
+
+        // async call
+        call.enqueue(this);
+    }
+
+    /*
+    * Trazendo esse cara para ser trabalhado no fragment como se fosse um controller, e não no
+    * nosso adapter.
+    */
+
+    private OnClickListener onClickListener() {
+        return new OnClickListener() {
+            @Override
+            public void onClick(View v, int pos) {
+                // Pass data from here to next single screen
+                Intent intent = new Intent(getContext(), DetailActivity.class);
+
+                // Transform our object into Parcelable (Car class)
+                intent.putExtra("team", teamListAdapter.getItem(pos));
+                startActivity(intent);
+            }
+        };
+    }
+
+    @Override
+    public void onResponse(Call<List<Team>> call, Response<List<Team>> response) {
+        teamListAdapter = new TeamListAdapter(getContext(), response.body(), onClickListener());
+        recyclerView.setAdapter(teamListAdapter);
     }
 
     @Override

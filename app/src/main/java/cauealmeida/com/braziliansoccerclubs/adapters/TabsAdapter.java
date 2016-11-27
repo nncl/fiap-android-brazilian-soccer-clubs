@@ -1,5 +1,6 @@
 package cauealmeida.com.braziliansoccerclubs.adapters;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -20,7 +21,14 @@ public class TabsAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+
+        // TODO remove it
+        // Pass information between fragments
+        Bundle b = new Bundle();
+        b.putString("type", "classicos");
+
         Fragment f = new TeamsFragment();
+        f.setArguments(b);
         return f;
     }
 

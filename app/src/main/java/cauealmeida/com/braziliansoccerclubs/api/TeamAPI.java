@@ -16,6 +16,6 @@ import retrofit2.http.Path;
  */
 
 public interface TeamAPI {
-    @GET("/carros/tipo/{tipo}")
-    Call<List<Team>> findBy(@Path("tipo") String args);
+    @GET("/carros/tipo/{type}")
+    Call<List<Team>> findBy(@Path("type") String args);
 }

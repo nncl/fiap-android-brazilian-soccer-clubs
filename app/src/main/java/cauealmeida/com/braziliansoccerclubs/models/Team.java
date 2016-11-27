@@ -3,14 +3,21 @@ package cauealmeida.com.braziliansoccerclubs.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by cauealmeida on 11/22/16.
  */
 
 public class Team implements Parcelable {
+
+    @SerializedName("nome")
     private String name;
+    @SerializedName("estado")
     private String state;
+    @SerializedName("escudo")
     private String logo;
+    @SerializedName("anoFundacao")
     private int birth;
 
     // Because we have to return a new Team
