@@ -17,6 +17,6 @@ import retrofit2.http.Query;
  */
 
 public interface TeamAPI {
-    @GET("/carros/tipo/classicos")
+    @GET("/nncl/dca25bd7dd6dda23d0e8d8f77b354bc2/raw/2d09c1febd1980e644912e9428000e40cf835932/soccerclubs.json")
     Call<List<Team>> get();
 }

@@ -5,11 +5,15 @@ package cauealmeida.com.braziliansoccerclubs.constants;
  */
 
 public enum Constants {
-    APIURL("http://www.mocky.io/v2/57c49ba10f00007111b50c00");
+    APIURL("https://gist.githubusercontent.com");
 
     private final String url;
 
     private Constants(String url) {
         this.url = url;
+    }
+
+    public String getUrl() {
+        return url;
     }
 }

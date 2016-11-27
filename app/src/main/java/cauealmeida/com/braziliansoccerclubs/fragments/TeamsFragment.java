@@ -1,6 +1,5 @@
 package cauealmeida.com.braziliansoccerclubs.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,6 +15,7 @@ import java.util.List;
 import cauealmeida.com.braziliansoccerclubs.R;
 import cauealmeida.com.braziliansoccerclubs.adapters.TeamListAdapter;
 import cauealmeida.com.braziliansoccerclubs.api.TeamAPI;
+import cauealmeida.com.braziliansoccerclubs.constants.Constants;
 import cauealmeida.com.braziliansoccerclubs.models.Team;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -57,7 +57,7 @@ public class TeamsFragment extends Fragment implements Callback<List<Team>> {
 
     private void loadContent() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://www.heiderlopes.com.br")
+                .baseUrl(Constants.APIURL.getUrl())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

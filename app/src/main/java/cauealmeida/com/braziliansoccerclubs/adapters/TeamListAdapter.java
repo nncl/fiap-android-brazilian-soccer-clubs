@@ -43,17 +43,31 @@ public class TeamListAdapter extends RecyclerView.Adapter<TeamListAdapter.TeamsV
     @Override
     public void onBindViewHolder(final TeamsViewHolder holder, final int position) {
         Team team = teamsList.get(position);
-        holder.tName.setText(team.getName());
-        holder.description.setText(team.getState());
+        holder.clubName.setText(team.getName());
+        holder.clubState.setText(team.getState());
+        holder.clubBirth.setText(String.valueOf(team.getBirth()));
+        holder.progressBar.setVisibility(View.VISIBLE);
 
         Picasso
                 .with(context)
                 .load(team.getLogo())
                 .placeholder(R.mipmap.ic_launcher)
                 .error(R.mipmap.ic_launcher)
-                .into(holder.image);
+                .into(holder.clubLogo, new com.squareup.picasso.Callback() {
 
-        holder.progressBar.setVisibility(View.VISIBLE);
+                    // Remove loading from view when image loaded,
+                    // either response being error or success one
+
+                    @Override
+                    public void onSuccess() {
+                        holder.progressBar.setVisibility(View.INVISIBLE);
+                    }
+
+                    @Override
+                    public void onError() {
+                        holder.progressBar.setVisibility(View.INVISIBLE);
+                    }
+                });
     }
 
     public Team getItem(int pos) {
@@ -66,17 +80,19 @@ public class TeamListAdapter extends RecyclerView.Adapter<TeamListAdapter.TeamsV
     }
 
     public static class TeamsViewHolder extends RecyclerView.ViewHolder {
-        public TextView tName;
-        ImageView image;
+        TextView clubName;
+        TextView clubState;
+        TextView clubBirth;
+        ImageView clubLogo;
         ProgressBar progressBar;
-        TextView description;
 
         public TeamsViewHolder(View v) {
             super(v);
-            tName = (TextView) v.findViewById(R.id.tvName);
-            image = (ImageView) v.findViewById(R.id.ivImage);
+            clubName = (TextView) v.findViewById(R.id.tvName);
+            clubLogo = (ImageView) v.findViewById(R.id.ivImage);
             progressBar = (ProgressBar) v.findViewById(R.id.progressImg);
-            description = (TextView) v.findViewById(R.id.tvDesc);
+            clubState = (TextView) v.findViewById(R.id.tvState);
+            clubBirth = (TextView) v.findViewById(R.id.tvBirth);
         }
     }
 

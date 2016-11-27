@@ -40,17 +40,6 @@
                     android:gravity="center|center_vertical"
                     android:visibility="invisible" />
             </FrameLayout>
-
-            <TextView
-                android:id="@+id/tvName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right|bottom"
-                android:layout_marginTop="20dp"
-                android:padding="10dp"
-                android:text="Club's Name"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="22sp" />
         </FrameLayout>
 
         <View
@@ -61,18 +50,47 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             >
 
             <TextView
-                android:id="@+id/tvDesc"
+                android:id="@+id/tvName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
                 android:ellipsize="end"
                 android:maxLines="3"
-                android:padding="16dp"
-                android:text="Club's description" />
+                android:paddingTop="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="2dp"
+                android:text="Club's name" />
+
+            <TextView
+                android:id="@+id/tvState"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="Club's state of birth" />
+
+            <TextView
+                android:id="@+id/tvBirth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:paddingTop="2dp"
+                android:paddingBottom="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="Club's birth" />
 
         </LinearLayout>
     </LinearLayout>

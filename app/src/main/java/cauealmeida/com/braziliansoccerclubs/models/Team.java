@@ -17,7 +17,7 @@ public class Team implements Parcelable {
     private String state;
     @SerializedName("escudo")
     private String logo;
-    @SerializedName("anoFundacao")
+    @SerializedName("anofundacao")
     private int birth;
 
     // Because we have to return a new Team
