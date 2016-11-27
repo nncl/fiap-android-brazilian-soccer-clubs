@@ -63,7 +63,7 @@ public class TeamsFragment extends Fragment implements Callback<List<Team>> {
 
         // prepara a chamada no Retrofit 2.0
         TeamAPI teamAPI = retrofit.create(TeamAPI.class);
-        Call<List<Team>> call = teamAPI.findBy("classicos");
+        Call<List<Team>> call = teamAPI.get();
 
         // async call
         call.enqueue(this);
